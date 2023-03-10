@@ -3,7 +3,7 @@ from typing import List
 from py_conf.sources.base import Source, DefaultsSource, OverrideSource
 from py_conf.sources.envvars import EnvVarSource
 from py_conf.utils import or_else
-from py_conf.value import ConfigValue, value
+from py_conf.value import ConfigValue, value, ConfigDetails
 
 _default_sources = [
     EnvVarSource()
@@ -36,6 +36,16 @@ def _clean_values(cls):
         else:
             cval = value(default=None)
 
+        if cval.from_str is None:
+            if typ is str:
+                cval.from_str = str
+            if typ is int:
+                cval.from_str = int
+            elif typ is float:
+                cval.from_str = float
+            elif typ is bool:
+                cval.from_str = lambda v: None if v is None else v.lower() == 'true'
+
         cval.vtype = typ
         cvals[key] = cval
 
@@ -53,9 +63,9 @@ class _MetaConfig(type):
 
 
 class Config(metaclass=_MetaConfig):
-    _name: str
     _sources: List[Source]
     _cvals: dict[str, ConfigValue]
+    _details: ConfigDetails
 
     def __init__(self, *,
                  name: str = None,
@@ -63,18 +73,18 @@ class Config(metaclass=_MetaConfig):
                  sources: List[Source] = None
                  ):
         self._sources = or_else(sources, _default_sources)
-        self._name = name
+        self._details = ConfigDetails(name=name)
 
         if load_on_init:
             self.load()
 
     def load(self):
-        vals = DefaultsSource().fetch_source(self._cvals)
+        vals = DefaultsSource().fetch_source(self._details, self._cvals)
 
         for src in self._sources:
-            vals.update(src.fetch_source(self._cvals))
+            vals.update(src.fetch_source(self._details, self._cvals))
 
-        vals.update(OverrideSource().fetch_source(self._cvals))
+        vals.update(OverrideSource().fetch_source(self._details, self._cvals))
 
         for k, v in vals.items():
             self.__setattr__(k, v)
