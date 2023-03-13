@@ -14,18 +14,21 @@ class ConfigValue:
     override: Optional[Any]
     env_var: bool | str
     from_str: Optional[Callable[[str], Any]]
+    prompt: bool
 
 
 def value(*,
           default: Any = None,
           override: Any = None,
           env_var: bool | str = True,
-          from_str: Optional[Callable[[str], Any]] = None
+          from_str: Optional[Callable[[str], Any]] = None,
+          prompt: bool = False
           ) -> ConfigValue:
     return ConfigValue(
         default=default,
         vtype=None,
         override=override,
         env_var=env_var,
-        from_str=from_str
+        from_str=from_str,
+        prompt=prompt
     )

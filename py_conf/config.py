@@ -2,6 +2,7 @@ from typing import List
 
 from py_conf.sources.base import Source, DefaultsSource, OverrideSource
 from py_conf.sources.envvars import EnvVarSource
+from py_conf.sources.prompt import PromptSource
 from py_conf.utils import or_else
 from py_conf.value import ConfigValue, value, ConfigDetails
 
@@ -48,6 +49,7 @@ def _clean_values(cls):
 
         cval.vtype = typ
         cvals[key] = cval
+        setattr(cls, key, None)
 
     cls._cvals = cvals
 
@@ -72,19 +74,25 @@ class Config(metaclass=_MetaConfig):
                  load_on_init: bool = False,
                  sources: List[Source] = None
                  ):
-        self._sources = or_else(sources, _default_sources)
+        self._sources = [DefaultsSource(),
+                         *or_else(sources, _default_sources),
+                         OverrideSource()
+                         ]
         self._details = ConfigDetails(name=name)
 
         if load_on_init:
             self.load()
 
     def load(self):
-        vals = DefaultsSource().fetch_source(self._details, self._cvals)
+        vals = {}
 
         for src in self._sources:
             vals.update(src.fetch_source(self._details, self._cvals))
 
-        vals.update(OverrideSource().fetch_source(self._details, self._cvals))
+        # have prompt default to the final state of other config sources
+        vals.update(
+            PromptSource().fetch_source_with_existing_vals(self._cvals, vals)
+        )
 
         for k, v in vals.items():
             self.__setattr__(k, v)

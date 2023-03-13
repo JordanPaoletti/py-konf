@@ -3,9 +3,9 @@ from py_conf.value import value
 
 
 class TestConfig(Config):
-    name: str = value(default='joe', override='bob')
-    quantity: int = 5
-    job: str
+    name: str = value(default='joe', override='bob', prompt=True)
+    quantity: int = value(default=5, prompt=True)
+    job: str = value(prompt=True)
 
 
 if __name__ == '__main__':
