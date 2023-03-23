@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 from py_conf.sources.base import Source, DefaultsSource, OverrideSource
@@ -11,6 +12,8 @@ _default_sources = [
     EnvVarSource(),
     CliSource()
 ]
+
+_log = logging.getLogger(__name__)
 
 
 def _handle_args(cls):
@@ -90,6 +93,7 @@ class Config(metaclass=_MetaConfig):
 
         for src in self._sources:
             vals.update(src.fetch_source(self._details, self._cvals))
+            _log.debug('%s: %s', src.__class__.__name__, vals)
 
         # have prompt default to the final state of other config sources
         vals.update(
