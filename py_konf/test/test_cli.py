@@ -1,6 +1,6 @@
 from io import StringIO
 
-from py_conf.cli import prompt_val
+from py_konf.cli import prompt_val
 
 
 class TestCli:

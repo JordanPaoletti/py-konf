@@ -1,9 +1,9 @@
 from functools import reduce
 from typing import Any
 
-from py_conf.cli import prompt_val
-from py_conf.sources.base import Source
-from py_conf.value import ConfigDetails, ConfigValue
+from py_konf.cli import prompt_val
+from py_konf.sources.base import Source
+from py_konf.value import ConfigDetails, ConfigValue
 
 
 def pretty_name(name: str) -> str:

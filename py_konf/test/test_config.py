@@ -1,4 +1,4 @@
-from py_conf.config import Config, value
+from py_konf.config import Config, value
 
 
 class TestConfig:

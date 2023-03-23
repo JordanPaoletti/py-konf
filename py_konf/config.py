@@ -1,11 +1,11 @@
 import logging
 from typing import List
 
-from py_conf.sources.base import Source, DefaultsSource, OverrideSource
-from py_conf.sources.cli import CliSource
-from py_conf.sources.envvars import EnvVarSource
-from py_conf.sources.prompt import PromptSource
-from py_conf.value import ConfigValue, value, ConfigDetails
+from py_konf.sources.base import Source, DefaultsSource, OverrideSource
+from py_konf.sources.cli import CliSource
+from py_konf.sources.envvars import EnvVarSource
+from py_konf.sources.prompt import PromptSource
+from py_konf.value import ConfigValue, value, ConfigDetails
 
 _default_sources = [
     EnvVarSource(),

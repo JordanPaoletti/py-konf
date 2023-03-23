@@ -1,6 +1,6 @@
 from io import StringIO
 
-from py_conf.config import Config, value
+from py_konf.config import Config, value
 
 
 class TestPromptSource:

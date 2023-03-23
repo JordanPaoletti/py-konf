@@ -2,7 +2,7 @@ import os
 from dataclasses import dataclass
 from typing import List
 
-from py_conf.config import Config, value
+from py_konf.config import Config, value
 
 
 class TestEnvVarSource:

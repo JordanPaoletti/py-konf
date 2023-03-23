@@ -2,9 +2,9 @@ import os
 
 import pytest
 
-import py_conf.test.conftest as conftest
-from py_conf.config import Config, value
-from py_conf.sources.files import JsonSource, ConfigSource
+import py_konf.test.conftest as conftest
+from py_konf.config import Config, value
+from py_konf.sources.files import JsonSource, ConfigSource
 
 
 class TestFiles:

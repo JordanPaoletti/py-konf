@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from py_conf.value import ConfigValue, ConfigDetails
+from py_konf.value import ConfigValue, ConfigDetails
 
 
 class Source(ABC):

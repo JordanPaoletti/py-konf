@@ -1,8 +1,8 @@
 from argparse import ArgumentParser
 from typing import List, Optional
 
-from py_conf.sources.base import Source
-from py_conf.value import ConfigValue, ConfigDetails
+from py_konf.sources.base import Source
+from py_konf.value import ConfigValue, ConfigDetails
 
 
 class CliSource(Source):
