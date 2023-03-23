@@ -5,7 +5,6 @@ from py_conf.sources.base import Source, DefaultsSource, OverrideSource
 from py_conf.sources.cli import CliSource
 from py_conf.sources.envvars import EnvVarSource
 from py_conf.sources.prompt import PromptSource
-from py_conf.utils import or_else
 from py_conf.value import ConfigValue, value, ConfigDetails
 
 _default_sources = [
@@ -14,18 +13,6 @@ _default_sources = [
 ]
 
 _log = logging.getLogger(__name__)
-
-
-def _handle_args(cls):
-    cls._values = cls.__annotations__
-
-    for key in cls.__annotations__.keys():
-        if hasattr(cls, key):
-            v = getattr(cls, key)
-            if type(v) is ConfigValue:
-                setattr(cls, key, v.default)
-        else:
-            setattr(cls, key, None)
 
 
 def _clean_values(cls):
@@ -80,7 +67,7 @@ class Config(metaclass=_MetaConfig):
                  sources: List[Source] = None
                  ):
         self._sources = [DefaultsSource(),
-                         *or_else(sources, _default_sources),
+                         *(sources if sources is not None else _default_sources),
                          OverrideSource()
                          ]
         self._details = ConfigDetails(name=name)
