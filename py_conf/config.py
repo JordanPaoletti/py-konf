@@ -100,3 +100,6 @@ class Config(metaclass=_MetaConfig):
             self.__setattr__(k, v)
 
         return self
+
+    def to_dict(self) -> dict:
+        return {k: self.__getattribute__(k) for k in self._cvals.keys()}

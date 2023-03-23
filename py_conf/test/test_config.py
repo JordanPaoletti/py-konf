@@ -23,3 +23,17 @@ class TestConfig:
         assert conf.name == 'override'
         assert conf.age == 2
         assert conf.job == 'over'
+
+    def test_dict(self):
+        class Conf(Config):
+            name: str = 'test'
+            age: int = value(default=3)
+            job: str
+
+        conf = Conf().load()
+        dic = conf.to_dict()
+
+        assert type(dic) == dict
+        assert dic['name'] == 'test'
+        assert dic['age'] == 3
+        assert dic['job'] is None
