@@ -5,6 +5,9 @@ description = "Simple lib for loading run configurations"
 authors = ["Jordan Paoletti <jordanspaoletti@gmail.com>"]
 readme = "README.md"
 packages = [{ include = "py_conf" }]
+exclude = [
+   "**/.pytest_cache/**/*"
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
