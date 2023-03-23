@@ -4,7 +4,8 @@ version = "0.1.0"
 description = "Simple lib for loading run configurations"
 authors = ["Jordan Paoletti <jordanspaoletti@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "py-konf" }]
+packages = [{ include = "py_konf" }]
+include = [ "test_res/" ]
 exclude = [
    "**/.pytest_cache/**/*"
 ]
