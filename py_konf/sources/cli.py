@@ -24,7 +24,6 @@ class CliSource(Source):
 
         args_parsed = vars(
             parser.parse_known_args(args=self.args)[0] if self.args is not None else parser.parse_known_args()[0])
-        print(args_parsed)
 
         vals = {}
         for key, cval in cli_vals.items():
